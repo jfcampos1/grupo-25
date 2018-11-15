@@ -1,0 +1,5 @@
+I">(function() {
+  $('#jemoji_1').jemoji();
+
+}).call(this);
+:ET

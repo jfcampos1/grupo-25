@@ -1,0 +1,27 @@
+    <%= form_with(model: foro, local: true) do |form| %>
+      <% if foro.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(foro.errors.count, "error") %> prohibited this foro from being saved:</h2>
+
+          <ul>
+          <% foro.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= form.label :title %>
+        <%= form.text_field :title, id: :foro_title, class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :description %>
+        <%= form.text_field :description, id: :foro_description, class: 'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>

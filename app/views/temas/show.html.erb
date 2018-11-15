@@ -1,0 +1,51 @@
+<div class="panel-group" id="accordionTema2">
+    <div class="panel panel-default", id= "cardcolor">
+      <div class="panel-heading" id="headingOne">
+        <h5 class="panel-title">
+          <small class="text-muted"><%= link_to @tema.foro.title, root_path , class: 'text_b'%> </small> | <%=emoji_filter @tema.name %>
+          <% if moderator?(@tema) %>
+            (Moderator)
+          <% end %>
+        </h5>
+      </div>
+
+      <div id="number" class="panel-collapse collapse in" aria-labelledby="headingOne">
+        <div class="panel-body", id= "cardbodycolor">
+
+          <%= markdownify @tema.description %>
+          <%= render 'pending_moderators', tema: @tema %>
+            <br>
+            <br>
+            <% if current_user && current_user.role == 'regular' %>
+              <% if !moderator?(@tema) %>
+            	 <%= request_button(@tema) %> |
+              <% end %>
+              <%= sub_request_button(@tema) %>
+            <% end %>
+          <br>
+          <br>
+          <% if  !@tema.posts.nil? %>
+            <%= render 'dropshow', tema: @tema %>
+          <% end %>
+          <% if logged_in? %>
+            <div class="row">
+              <aside class="col-md-12">
+                <section class="posts_form">
+                  <%= render partial: 'posts/form' %>
+                </section>
+              </aside>
+            </div>
+          <% end %>
+
+          <%= link_to 'Back', root_path ,class: "btn btn-primary", id: "nothover"%>
+          <% if moderator?(@tema) || (current_user && current_user.role == "admin") %>
+            | <%= link_to 'Edit', edit_tema_path(@tema),class: "btn btn-info not_visit" %> |
+            <%= link_to 'Destroy', @tema,  class: "btn btn-danger not_visit", method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+        <div class="panel-footer text-muted", id= "cardbodycolor">
+          Created at <%= @tema.created_at %>
+        </div>
+      </div>
+    </div>
+</div>

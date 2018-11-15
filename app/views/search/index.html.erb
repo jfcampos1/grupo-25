@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+  <h1>Forums</h1>
+
+  <%= render 'dropindex', foro: @forosf %>
+  <% if @forosf.blank? %>
+    <h4>There are no forum containing the term <%= params[:search] %>.</h4>
+  <% end %>
+
+  <h1>Post</h1>
+
+
+  <% @temas.each do |tema| %>
+    <% @var = 0 %>
+    <% if  !tema.posts.nil? %>
+      <% tema.posts.each do |post| %>
+        <% @postsf.each do |postf| %>
+          <% if post == postf %>
+            <% @var = 1 %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if  @var == 1 %>
+        <%= render 'dropshow', tema: tema %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @postsf.blank? %>
+    <h4>There are no post containing the term <%= params[:search] %>.</h4>
+  <% end %>
+
+
+
+<br>

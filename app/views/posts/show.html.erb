@@ -1,0 +1,50 @@
+<% if current_user && current_user.role == 'regular' %>
+  <%= fav_request_button(@post) %>
+<% end %>
+<% provide(:page_title, @post.title) %>
+<% provide(:blog_active, 'active') %>
+<div class="col-sm-13">
+
+
+  <h2><%= emoji_filter @post.title %></h2>
+  <h5><span class="glyphicon glyphicon-time"></span> Post by <%= link_to @post.user.name, @post.user %>, <%= @post.date %>.</h5>
+  <h5>
+    <span class="label label-primary"><%= link_to "#{@post.tema.foro.title}", foros_path, title: "Back to Foros", class: "not_visit text_b hvr-grow"  %></span>
+    <span class="label label-danger"><%= link_to "#{@post.tema.name}", tema_path(@post.tema), title: "Back to Tema", class: "not_visit text_b hvr-grow"  %></span>
+  </h5>
+  <br>
+
+  <br><br>
+  <p><%= markdownify @post.content %></p>
+
+  <br><br>
+  <%= render partial: 'totalrank' %>
+
+  <%= link_to "Back", tema_path(@post.tema), title: "Back to Tema", class: "btn btn-primary", id: "nothover" %>
+  <% if moderator?(@post.tema) || (current_user && current_user.role == "admin") %>
+    | <%= link_to 'Edit', edit_post_path(id: @post),class: "btn btn-info not_visit" %> |
+    <%= link_to 'Destroy', @post,  class: "btn btn-danger not_visit", method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+  <hr>
+  <br><br>
+
+  <p><span class="badge"> <%= @post.coments.count %> </span> Comments:</p><br>
+  <div class="row">
+    <h6><%= render partial: 'posts/coment', collection: @post.coments.reverse %></h6>
+    <br>
+
+    </div>
+  </div>
+  <h3>Leave a Comment:</h3>
+  <% if logged_in? %>
+    <%= render partial: 'rating' %>
+
+    <div class="row">
+      <aside class="col-md-13">
+        <section class="coments_form">
+          <%= render partial: 'coments/form' %>
+        </section>
+      </aside>
+    </div>
+  <% end %>
+</div>

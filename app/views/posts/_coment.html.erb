@@ -1,0 +1,18 @@
+<div class="col-sm-2 text-center">
+  <img src=<%= profile_picture(coment.user)%> class="img-circle" height="65" width="65" alt="Avatar">
+
+</div>
+<div class="col-sm-10">
+  <% @comentario2 = coment %>
+  <h4><%= coment.user.name %> <small><%= coment.date %> </small> <%= render partial: 'totalrankcoment', id_comenta: @comentario2 %></h4>
+  <p><%= markdownify coment.content %> </p>
+  <% @comentario = coment %>
+  <% if logged_in? %>
+    <%= render partial: 'ratingcoment', id_coment: @comentario %>
+  <% end %>
+  <% if moderator?(@post.tema) || (current_user && current_user.role == "admin") %>
+    <%= link_to 'Edit', edit_coment_path(id: coment), class: "btn btn-info not_visit" %> |
+    <%= link_to 'Destroy', coment, class: "btn btn-danger not_visit",method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+  <br>
+</div>

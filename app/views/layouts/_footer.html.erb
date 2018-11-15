@@ -1,0 +1,21 @@
+<footer class="footer">
+  <small>
+     </a>
+     Software Ingineering, Group 25</a>
+  </small>
+  <nav>
+    <ul>
+      <li>Share: <a href="#" id="fb_share" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
+      <li><%= link_to "About us",   about_path %></li>
+      <li><%= link_to "Help", help_path %></li>
+      <li><%= link_to "Contact", contact_path %></li>
+      <li><a href="https://github.com/IIC2143-2018-1/grupo-25/" target="_blank">Repository</a></li>
+    </ul>
+  </nav>
+
+</footer>
+<script>
+    window.onload = function() {
+        fb_share.href ='http://www.facebook.com/share.php?u=' + encodeURIComponent(location.href);
+    }
+</script>

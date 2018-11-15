@@ -1,0 +1,30 @@
+<hr>
+<% if logged_in? %>
+  <h4><small>Subscriptions</small></h4>
+  <% @user.subscriptions.each do |subs| %>
+    <% tema = subs.tema %>
+    <div class="panel-group" id="accordionTema2">
+        <div class="panel panel-default", id= "cardcolor">
+          <div class="panel-heading" id="headingOne">
+            <h5 class="panel-title">
+              <small class="text-muted"><%= link_to tema.foro.title, root_path , class: 'text_b'%> </small> | <%= tema.name %>
+            </h5>
+          </div>
+
+          <div id="number" class="panel-collapse collapse in" aria-labelledby="headingOne">
+            <div class="panel-body", id= "cardbodycolor">
+              <%= tema.description %>
+              <br>
+              <br>
+              <% if  !tema.posts.nil? %>
+                <%= render 'dropshow', tema: tema %>
+              <% end %>
+            </div>
+            <div class="panel-footer text-muted", id= "cardbodycolor">
+              Created at <%= tema.created_at %>
+            </div>
+          </div>
+        </div>
+    </div>
+  <% end %>
+<% end %>

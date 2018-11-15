@@ -1,0 +1,16 @@
+<%= form_for ([foro, foro.temas.build]) do |f| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :tema_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :tema_description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>

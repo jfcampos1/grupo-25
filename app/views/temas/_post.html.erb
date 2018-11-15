@@ -1,0 +1,14 @@
+
+
+<h3>Leave a Post:</h3>
+<%= form_for ([@tema, @tema.posts.build])do |f| %>
+
+  <div class="field">
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

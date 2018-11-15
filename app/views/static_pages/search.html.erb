@@ -1,0 +1,17 @@
+<div class="center jumbotron">
+  <h1>Search</h1>
+
+  <h2>Search of Forums and Posts</h2>
+
+  <div id="resultados-foro">
+
+  </div>
+
+  <%= form_tag "/search/create", method: :get, remote: true, id: "search-form" do %>
+    <%= text_field_tag :keyword, nil, class: "form-control", placeholder: "What Forums are you looking for?" %>
+    <%= content_tag :button, class: "btn btn-primary", type: :submit do %>
+      Search
+    <%end%>
+  <%end%>
+
+</div>

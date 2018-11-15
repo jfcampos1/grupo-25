@@ -1,0 +1,19 @@
+<p>
+  Dear <%= @user.name %>,
+</p>
+
+<p>
+  Thanks for registering! To confirm your registration click the URL below.
+  <br>
+  <%= confirm_email_user_url(@user.confirm_token) %>
+</p>
+
+<p>
+
+  To login to the site, just follow this link: <%= @url %>.
+</p>
+
+<p>
+  Best regards,<br/>
+  Foreados's staff
+</p>

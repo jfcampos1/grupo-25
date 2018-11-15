@@ -1,0 +1,141 @@
+<head>
+  <meta charset="utf-8"/>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title><%= yield :title %></title>
+
+  <%= javascript_include_tag 'dashing/application' %>
+  <%= stylesheet_link_tag 'dashing/application' %>
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+  <link rel="icon" href="/favicon.ico">
+</head>
+<% content_for :title do %>
+  Super dashboard
+<% end %>
+
+
+<p id="notice"><%= notice %></p>
+
+<h1 style="padding: 20px;">Dashboard</h1>
+<div class="panel-group" id="accordionForo2">
+  <div class="panel panel-default", id= "cardcolor">
+      <div class="panel-heading" id="headingOne">
+        <h2 class="panel-title flex-column align-items-start active">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#number_forum"  aria-controls="number_forum" data-parent="#accordionForo2">
+            Forums information
+          </button>
+        </h2>
+      </div>
+      <div id="number_forum" class="panel-collapse collapse" aria-labelledby="headingOne" >
+        <div class="panel-body", id= "cardbodycolor">
+          <div class="list-group">
+            <%= render 'foros/dropindexd1', foro: @foro %>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="panel panel-default", id= "cardcolor">
+      <div class="panel-heading" id="headingOne">
+        <h2 class="panel-title flex-column align-items-start active">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#number_users"  aria-controls="number_users" data-parent="#accordionForo2">
+            Users information
+          </button>
+        </h2>
+      </div>
+
+      <div id="number_users" class="panel-collapse collapse" aria-labelledby="headingOne" >
+        <div class="panel-body", id= "cardbodycolor">
+          <div class="list-group">
+              <table class="table table-hover" style="color: #333;">
+                <thead>
+                  <tr>
+                    <th>User </th>
+                    <th>N° Publications</th>
+                    <th>N° Comments</th>
+                    <th>Rank </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <% @users.each do |user| %>
+                  <%= link_to user do %>
+                  <% @usuario = user %>
+                      <tr>
+                        <td><%= user.name %></td>
+                        <td><%= user.posts.count %></td>
+                        <td><%= user.coments.count %></td>
+                        <td float="right"><%= render partial: 'users/reputation0', usuario: @usuario %></td>
+                      </tr>
+                <% end %>
+                <% end %>
+              </tbody>
+              </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div id="container">
+
+
+  <div class="gridster ready" style="align-items:center;">
+    <ul>
+
+      <li data-row="2" data-col="2" data-sizex="2" data-sizey="1">
+        <div data-id="valuation" data-title="Current Valuation" data-moreinfo="In billions" data-prefix="$" class="widget widget-number valuation" style="background-color:#a94442;"><h1 class="title" data-bind="title">Number of users</h1>
+          <% @users_c = 0 %>
+          <% @users.each do |user| %>
+          <% @users_c += 1 %>
+          <% end %>
+          <h2 class="value" data-bind="current | shortenedNumber | prepend prefix | append suffix"><%= @users_c %></h2>
+
+          <p class="more-info" data-bind="moreinfo">Created to date</p>
+        </div>
+      </li>
+      <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
+        <div data-id="valuation" data-title="Current Valuation" data-moreinfo="In billions" data-prefix="$" class="widget widget-number valuation" style="background-color:#a94442;width:380px;"><h1 class="title" data-bind="title">Number of posts</h1>
+          <% @post_c = 0 %>
+          <% @posts.each do |post| %>
+            <% if post.date.today? %>
+              <% @post_c += 1 %>
+            <% end %>
+          <% end %>
+          <h2 class="value" data-bind="current | shortenedNumber | prepend prefix | append suffix"><%= @post_c %></h2>
+
+          <p class="more-info" data-bind="moreinfo">Created today</p>
+        </div>
+      </li>
+      <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+        <div data-id="valuation" data-title="Current Valuation" data-moreinfo="In billions" data-prefix="$" class="widget widget-number valuation" style="background-color:#a94442;"><h1 class="title" data-bind="title">Number of comments</h1>
+          <% @coments_c = 0 %>
+          <% @coments.each do |coment| %>
+            <% if coment.date.today? %>
+              <% @coments_c += 1 %>
+            <% end %>
+          <% end %>
+          <h2 class="value" data-bind="current | shortenedNumber | prepend prefix | append suffix"><%= @coments_c %></h2>
+
+          <p class="more-info" data-bind="moreinfo">Created today</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+<%= yield %>
+</div>
+
+
+
+
+
+
+
+
+
+
+<br>

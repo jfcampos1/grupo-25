@@ -1,0 +1,88 @@
+<% provide(:title, 'All users') %>
+<h1>Users Reputation</h1>
+
+<%users_rep = []%>
+
+<% @users.each do |user| %>
+  <% number = 0 %>
+  <% if logged_in? %>
+    <% total_r = 0 %>
+    <% n_posts = 0 %>
+    <% user.posts.each do |m_posts| %>
+      <% stars = 0 %>
+      <% total_votes = 0 %>
+      <% m_posts.postratings.each do |rating| %>
+        <% stars += rating.star %>
+        <% total_votes += 1 %>
+      <% end %>
+      <% if total_votes == 0 %>
+        <% number = 0 %>
+      <% else %>
+        <% number = stars/total_votes %>
+      <% end %>
+      <% total_r += number %>
+      <% n_posts += 1 %>
+    <% end %>
+    <% if n_posts == 0 %>
+      <% number = 0 %>
+    <% else %>
+      <% number = total_r/n_posts %>
+    <% end %>
+
+    <% total_r2 = 0 %>
+    <% n_coments = 0 %>
+    <% user.coments.each do |m_coments| %>
+      <% stars2 = 0 %>
+      <% total_votes2 = 0 %>
+      <% m_coments.comentratings.each do |rating2| %>
+        <% stars2 += rating2.star %>
+        <% total_votes2 += 1 %>
+      <% end %>
+      <% if total_votes2 == 0 %>
+        <% number2 = 0 %>
+      <% else %>
+        <% number2 = stars2/total_votes2 %>
+      <% end %>
+      <% total_r2 += number2 %>
+      <% n_coments += 1 %>
+    <% end %>
+    <% if n_coments == 0 %>
+      <% number2 = 0 %>
+    <% else %>
+      <% number2 = total_r2/n_coments %>
+    <% end %>
+    <% number_f = (number + number2)/ 2 %>
+
+  <% users_rep << [user, number_f] %>
+
+  <% end %>
+
+<% end %>
+<% users_rep = users_rep.sort_by{|x,y|y}.reverse %>
+
+<ul class="users">
+  <div class="list-group-item list-group-item-action flex-column align-items-start active", id='list_color'>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Place</th>
+          <th>   Name   </th>
+          <th>   Rank   </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% lugar = 0 %>
+        <% users_rep.each do |user| %>
+        <%= link_to user[0] do %>
+          <tr>
+            <% @usuario = user[0] %>
+            <td><%= lugar = lugar+1%> </td>
+            <td><%= user[0].name %></td>
+            <td><%= render partial: 'reputation0', usuario: @usuario %></td>
+          </tr>
+  <%end%>
+  <% end %>
+</tbody>
+</table>
+</div>
+</ul>

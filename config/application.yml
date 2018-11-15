@@ -1,0 +1,7 @@
+development:
+  GMAIL_USERNAME: 'foreados.2018@gmail.com'
+  GMAIL_PASSWORD: 'ecazhrhbsujujkzs'
+test:
+  secret_key_base: fb77829fe9009a5154d64c0db18cedab081e9bc02b0432c7b10fc44867a7540a0b6a8953dc0bc1ba4e4673f680b61c4fc6c879180da39b0e442b73bdf7ba7c87
+  facebook_app_id: <%= ENV["FACEBOOK_APP_ID"] %>
+  facebook_app_secret: <%= ENV["FACEBOOK_APP_SECRET"] %>

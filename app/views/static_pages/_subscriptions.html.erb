@@ -1,0 +1,97 @@
+<h1>Last activity subscriptions</h1>
+<hr>
+<h4><small>Subscriptions</small></h4>
+<% current_user.subscriptions.each do |subs| %>
+  <% tema = subs.tema %>
+  <% posts = [] %>
+  <% tema.posts.each do |post| %>
+    <% if Time.now.prev_week < post.created_at%>
+      <% posts << post %>
+    <% end %>
+  <% end %>
+
+  <% coments = [] %>
+  <% posts.each do |post| %>
+
+    <% post.coments.each do |coment| %>
+      <% if Time.now.prev_week < coment.created_at%>
+
+        <% coments << coment %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% todo = coments + posts %>
+  <% todo = todo.sort_by(&:created_at) %>
+  <% if  !posts.nil? %>
+  <div class="panel-group" id="accordionForo">
+        <% todo.each do |t| %>
+          <% if  t.is_a?(Post) %>
+            <%= link_to t.tema do %>
+              <div class="list-group-item list-group-item-action flex-column align-items-start active", id='list_color'>
+                <div class="alert alert-success">
+                  <strong>New Post! </strong>
+                </div>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Tema</th>
+                      <th>Post title </th>
+                      <th>Post content </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= t.tema.name %></td>
+                      <td><%= emoji_filter t.title %></td>
+                      <td><%= markdownify t.content %></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <% if current_user && current_user.role == "admin" %>
+                  <%= link_to 'Edit', edit_post_path(t), class: "btn btn-info" %> |
+                  <%= link_to 'Destroy', t, class: "btn btn-danger",method: :delete, data: { confirm: 'Are you sure?' } %>
+                <% end %>
+
+                <d><%= t.created_at %></d>
+                <h4></h4>
+              </div>
+            <% end %>
+          <% end %>
+          <% if  t.is_a?(Coment) %>
+            <%= link_to t.post do %>
+              <div class="list-group-item list-group-item-action flex-column align-items-start active", id='list_color'>
+                <div class="alert alert-info">
+                  <strong>New Coment!</strong>
+                </div>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Post</th>
+                      <th>Coment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= t.post.title %></td>
+                      <td><%= markdownify t.content %></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <% if current_user && current_user.role == "admin" %>
+                  <%= link_to 'Edit', edit_post_path(t), class: "btn btn-info" %> |
+                  <%= link_to 'Destroy', t, class: "btn btn-danger",method: :delete, data: { confirm: 'Are you sure?' } %>
+                <% end %>
+
+                <d><%= t.created_at %></d>
+                <h4></h4>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+
+  </div>
+  <% end %>
+<% end %>

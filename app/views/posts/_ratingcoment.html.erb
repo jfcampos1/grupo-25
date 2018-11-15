@@ -1,0 +1,26 @@
+<div>
+  <h5> <%= markdownify "**Rank this coment**" %> </h5>
+  <% if Comentrating.find_by(user_id: current_user.id, coment_id: @comentario.id) %>
+    <% rating = Comentrating.find_by(user_id: current_user.id, coment_id: @comentario.id) %>
+    <% stars = rating.star %>
+    <ul class="rating <%= starstring(stars)%>">
+  <% else %>
+    <ul class="rating nostar">
+  <% end %>
+    <li class="one">
+      <%= link_to '1', coment_comentratings_path(@comentario, star: 1), method: 'post', title: "1 Star", remote: false %>
+    </li>
+    <li class="two">
+      <%= link_to '2', coment_comentratings_path(@comentario, star: 2), method: 'post', title: "2 Star", remote: false %>
+    </li>
+    <li class="three">
+      <%= link_to '3', coment_comentratings_path(@comentario, star: 3), method: 'post', title: "3 Star", remote: false %>
+    </li>
+    <li class="four">
+      <%= link_to '4', coment_comentratings_path(@comentario, star: 4), method: 'post', title: "4 Star", remote: false %>
+    </li>
+    <li class="five">
+      <%= link_to '5', coment_comentratings_path(@comentario, star: 5), method: 'post', title: "5 Star", remote: false %>
+    </li>
+  </ul>
+</div>

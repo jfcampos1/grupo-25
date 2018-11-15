@@ -1,0 +1,25 @@
+<% if logged_in? %>
+  <% total_r = 0 %>
+  <% n_posts = 0 %>
+  <% user.posts.each do |m_posts| %>
+    <% stars = 0 %>
+    <% total_votes = 0 %>
+    <% m_posts.postratings.each do |rating| %>
+      <% stars += rating.star %>
+      <% total_votes += 1 %>
+    <% end %>
+    <% if total_votes == 0 %>
+      <% number = 0 %>
+    <% else %>
+      <% number = stars/total_votes %>
+    <% end %>
+    <% total_r += number %>
+    <% n_posts += 1 %>
+  <% end %>
+  <% if n_posts == 0 %>
+    <% number = 0 %>
+  <% else %>
+    <% number = total_r/n_posts %>
+  <% end %>
+  <p class="rating <%= starstring(number)%>"></p>
+<% end %>

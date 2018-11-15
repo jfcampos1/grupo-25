@@ -1,0 +1,62 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "font-awesome";
+
+.user-image {
+  width: 150px;
+  height: 150px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+#profile-avatar {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+img {
+  display: unset;
+}
+.request {
+		padding: 5px;
+    border-radius: 5px;
+    border: 2px solid #dddddd;
+}
+
+.multiimage {
+	display: inline-block;
+	p {
+		text-align: center;
+		margin: 0;
+	}
+	a {
+		text-decoration: none;
+		display: inline-block;
+		border-radius: 5px;
+	}
+	h4 {
+		text-align: center;
+	}
+	.block {
+		padding: 5px;
+		border-radius: 5px;
+		h4, p{
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		h4, p {
+			text-decoration: none;
+			color: #555;
+		}
+		&:hover {
+		background: #666;
+		h4, p {
+			color: white;
+		}
+		}
+	}
+}
+
+.row.content {
+  height: 1000px;
+}

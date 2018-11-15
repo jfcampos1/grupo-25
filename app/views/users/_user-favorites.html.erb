@@ -1,0 +1,27 @@
+<% if logged_in? %>
+  <h4><small>Favorites</small></h4>
+  <% @user.favorites.each do |fav| %>
+    <% post = fav.post %>
+    <div class="panel-group" id="accordionTema2">
+        <div class="panel panel-default", id= "cardcolor">
+          <div class="panel-heading" id="headingOne">
+            <h5 class="panel-title">
+              <small class="text-muted"><%= link_to post.tema.name, tema_path , class: 'text_b'%> </small> | <%= post.title %>
+            </h5>
+          </div>
+
+          <div id="number" class="panel-collapse collapse in" aria-labelledby="headingOne">
+            <div class="panel-body", id= "cardbodycolor">
+              <%= post.content %>
+              <br>
+              <br>
+              <%= link_to 'View', post, class: "btn btn-primary not_visit", id: "nothover" %>
+            </div>
+            <div class="panel-footer text-muted", id= "cardbodycolor">
+              Created at <%= post.created_at %> by <%= link_to post.user.name, post.user %>
+            </div>
+          </div>
+        </div>
+    </div>
+  <% end %>
+<% end %>

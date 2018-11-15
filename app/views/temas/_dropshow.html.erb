@@ -1,0 +1,31 @@
+<div class="panel-group" id="accordionTema">
+  <% @tema.posts.each do |post| %>
+    <div class="panel panel-default", id= "cardcolor">
+      <div class="panel-heading" id="headingOne">
+        <h5 class="panel-title">
+          
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#number_<%= post.id %>" aria-controls="number_<%= post.id %>" data-parent="#accordionTema">
+            <%= emoji_filter post.title %>
+
+          </button>
+          <% if moderator?(@tema) || (current_user && current_user.role == "admin") %>
+            <%= link_to 'Edit', edit_post_path(id: post) ,class: "btn btn-info not_visit"%>
+            <%= link_to 'Destroy', post,  class: "btn btn-danger not_visit", method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+           <span class="badge badge-primary badge-pill right"><%= post.coments.count %></span>
+        </h5>
+      </div>
+
+      <div id="number_temas_<%= post.id %>" class="panel-collapse collapse show" aria-labelledby="headingOne">
+        <div class="panel-body", id= "cardbodycolor">
+          <p> <%= markdownify post.content %> </p>
+          <%= link_to 'View', post, class: "btn btn-primary", id: "nothover" %>
+        </div>
+        <div class="panel-footer text-muted", id= "cardbodycolor">
+          Created at <%= post.date %> by <%= link_to post.user.name, post.user %>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>

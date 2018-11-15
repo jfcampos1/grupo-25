@@ -1,0 +1,51 @@
+
+<div class="panel-group" id="accordionForo">
+  <% @foros.each do |foro| %>
+    <div class="panel panel-default", id= "cardcolor">
+      <div class="panel-heading" id="headingOne">
+        <h5 class="panel-title">
+
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#number_<%= foro.id %>"  aria-controls="number_<%= foro.id %>" data-parent="#accordionForo">
+            <%= foro.title %> |
+            <%= foro.description %>
+
+          </button>
+          <div class = 'align-right'>
+            <% if current_user && current_user.role == "admin" %>
+              <%= link_to 'Edit', edit_foro_path(foro), class: "btn btn-info not_visit" %> |
+              <%= link_to 'Destroy', foro, class: "btn btn-danger not_visit",method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </div>
+        </h5>
+      </div>
+
+      <div id="number_<%= foro.id %>" class="panel-collapse collapse" aria-labelledby="headingOne" >
+        <div class="panel-body", id= "cardbodycolor">
+          <div class="list-group">
+            <% foro.temas.each do |tema| %>
+              <%= link_to tema do %>
+                <div class="list-group-item list-group-item-action flex-column align-items-start active", id='list_color'>
+                  <li class="list-group-item d-flex justify-content-between align-items-center", id='list_child_color'>
+                    <%= emoji_filter tema.name %>
+                    <span class="badge badge-primary badge-pill"><%= tema.posts.count%></span>
+                  </li>
+                  <p class="mb-1 text_b"><%= markdownify tema.description %></p>
+
+                  <% if current_user && current_user.role == "admin" %>
+                    <%= link_to 'Edit', edit_tema_path(tema), class: "btn btn-info not_visit" %> |
+                    <%= link_to 'Destroy', tema, class: "btn btn-danger not_visit",method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+            <br>
+            <% if current_user && current_user.role == "admin" %>
+              <% @c_foro = foro %>
+              <%= link_to 'Create', new_tema_path(foro: @c_foro), class: "btn btn-info not_visit" , foro_id: @c_foro %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

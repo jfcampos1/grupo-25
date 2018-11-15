@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 border_forms">
+    <h1>Editing Coment</h1>
+
+    <% @c_coment = Coment.find(params[:id]) %>
+    <%= form_with(model: @c_coment, local: true) do |f| %>
+
+      <div class="field">
+        <%= f.text_area :content, class: 'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+
+    <% end %>
+
+    <%= link_to 'Back', coments_path , class: "btn btn-info" %>
+  </div>
+</div>

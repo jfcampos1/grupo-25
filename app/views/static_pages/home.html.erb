@@ -1,0 +1,32 @@
+<% if logged_in? %>
+  <% if current_user && current_user.role != "admin" %>
+    <div class = "row">
+      <div class = "col-sm-6">
+        <h1>Forums</h1>
+        <%= render 'foros/dropindex', foro: @foro %>
+      </div>
+      <div class = "col-sm-6">
+        <%= render 'subscriptions' %>
+      </div>
+    </div>
+  <% else %>
+    <h1>Forums</h1>
+    <%= render 'foros/dropindex', foro: @foro %>
+  <% end %>
+<% else %>
+    <div class = "jumbotron text-center">
+      <h1>Welcome to Foreados</h1>
+      <p>Please sign in with your user or sign up now!</p>
+      <button class = "btn btn-lg" color = "#ffffff">
+        <%= link_to "Sign up now!", signup_path, class: "btn"%>
+      </button>
+    </div>
+    <hr>
+    <h1>Forums</h1>
+    <%= render 'foros/dropindex', foro: @foro %>
+<% end %>
+
+<br>
+<% if current_user && current_user.role == "admin" %>
+  <%=link_to 'New Foro', new_foro_path, class: "btn btn-info not_visit"%>
+<% end %>

@@ -1,0 +1,27 @@
+<div>
+  <h4> Rank this post </h4>
+  <% if Postrating.find_by(user_id: current_user.id, post_id: @post.id) %>
+    <% rating = Postrating.find_by(user_id: current_user.id, post_id: @post.id) %>
+    <% stars = rating.star %>
+    <h5> You rank this post with </h5>
+    <ul class="rating <%= starstring(stars)%>">
+  <% else %>
+    <ul class="rating nostar">
+  <% end %>
+    <li class="one">
+      <%= link_to '1', post_postratings_path(@post, star: 1), method: 'post', title: "1 Star", remote: false %>
+    </li>
+    <li class="two">
+      <%= link_to '2', post_postratings_path(@post, star: 2), method: 'post', title: "2 Star", remote: false %>
+    </li>
+    <li class="three">
+      <%= link_to '3', post_postratings_path(@post, star: 3), method: 'post', title: "3 Star", remote: false %>
+    </li>
+    <li class="four">
+      <%= link_to '4', post_postratings_path(@post, star: 4), method: 'post', title: "4 Star", remote: false %>
+    </li>
+    <li class="five">
+      <%= link_to '5', post_postratings_path(@post, star: 5), method: 'post', title: "5 Star", remote: false %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,76 @@
+<script src="//netdna.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h4> <%= @user.name %> </h4>
+      <span class="text-muted"><%= @user.email %></span>
+      <h4></h4>
+
+      <section class="stats">
+        <%= render 'shared/stats' %>
+      </section>
+      <h4></h4>
+      <img src=<%= profile_picture(@user) %> class="user-image">
+      <h4></h4>
+      <% if current_user and current_user.role == 'admin' %>
+        <p>
+          <strong>Role:</strong>
+          <%= @user.role %>
+        </p>
+      <% end %>
+      <%= render partial: 'reputation' %>
+      <h4></h4>
+      <% if current_user && (current_user.role == 'admin' || current_user == @user) %>
+        <%= link_to 'Edit', edit_user_path(@user),class: "btn btn-info not_visit" %>
+        <% if current_user.role != 'admin' || current_user != @user %>
+          | <%= link_to 'Delete', @user,  class: "btn btn-danger not_visit", method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+      <% end %>
+      <% if current_user  != @user %>
+
+        <%= render 'follow_form' if logged_in? %>
+      <% end %>
+      <h4></h4>
+      <div class="row">
+        <div class="col-3">
+          <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-favorites-list" data-toggle="list" href="#list-favorites" role="tab" aria-controls="favorites">Favorites</a>
+            <a class="list-group-item list-group-item-action" id="list-subscriptions-list" data-toggle="list" href="#list-subscriptions" role="tab" aria-controls="subscriptions">Subscriptions</a>
+            <a class="list-group-item list-group-item-action" id="list-comments-list" data-toggle="list" href="#list-comments" role="tab" aria-controls="comments">Comments</a>
+          </div>
+        </div>
+      </div>
+        <br>
+
+  </div>
+
+    <div class="col-sm-9">
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane show active" id="list-favorites" role="tabpanel" aria-labelledby="list-favorites-list">
+          <%= render partial: 'user-favorites' %>
+        </div>
+        <div class="tab-pane" id="list-subscriptions" role="tabpanel" aria-labelledby="list-subscriptions-list">
+          <%= render partial: 'user-subscriptions' %>
+        </div>
+        <div class="tab-pane" id="list-comments" role="tabpanel" aria-labelledby="list-comments-list">
+          <hr>
+          <h4><small>RECENT COMENTS</small></h4>
+          <% sorted = @coments.sort_by {|coment| coment.post} %>
+          <% sorted.each do |coment| %>
+            <% if @user == coment.user %>
+              <hr>
+              <h3 align="left"> <%=link_to coment.post.title, post_path(coment.post), class: "text_b"%> </h3>
+              <h5><span class="glyphicon glyphicon-time"></span> Coment by <%=coment.user.name%>, <%=coment.date%>.</h5>
+              <h5>
+                <span class="label label-primary"><%= link_to "#{coment.post.tema.foro.title}", foros_path, title: "Back to Foros", class: "not_visit text_b hvr-grow"  %></span>
+                <span class="label label-danger"><%= link_to "#{coment.post.tema.name}", tema_path(coment.post.tema), title: "Back to Tema", class: "not_visit text_b hvr-grow"  %></span>
+                <span class="label label-success"><%= link_to "#{coment.post.title}", post_path(coment.post), title: "Back to Post", class: "not_visit text_b hvr-grow"  %></span>
+              </h5><br>
+              <p><%= markdownify coment.content%></p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

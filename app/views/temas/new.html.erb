@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 border_forms">
+    <h1>New Tema</h1>
+    <% @c1_foros = Foro.find(params[:foro]) %>
+    <%= form_for ([@c1_foros, @c1_foros.temas.build]) do |f| %>
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name, id: :tema_name, class: 'form-control'%>
+      </div>
+
+      <div class="field">
+        <%= f.label :description %>
+        <%= f.text_area :description, id: :tema_description, class: 'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+
+    <% end %>
+
+
+    <%= link_to 'Back', root_path ,class: "btn btn-info"%>
+  </div>
+</div>

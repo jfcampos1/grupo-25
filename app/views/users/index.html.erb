@@ -1,0 +1,24 @@
+<% provide(:title, 'All users') %>
+<h1>Users</h1>
+<div class = "multiimage">
+  <% if current_user && current_user.role == "admin" %>
+    <% sorted = @users.sort_by {|user| [user.role, user.name]} %>
+  <% else %>
+    <% sorted = @users.sort_by {|user| user.name} %>
+  <% end %>
+  <% sorted.each do |user| %>
+    <%= link_to user do %>
+      <div class = "block">
+        <img src=<%=profile_picture(user)%> class = "user-image">
+        <h4><%= user.name %></h4>
+        <% if current_user && current_user.role == "admin" %>
+          <p><%= user.role %></p>
+        <%end%>
+      </div>
+    <% end %>
+  <%end%>
+<br>
+<% if current_user && current_user.role == "admin" %>
+<br>
+  <%= link_to 'New User', new_user_path, class: "btn btn-info not_visit" %>
+<%end%>

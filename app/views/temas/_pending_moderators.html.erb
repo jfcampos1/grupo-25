@@ -1,0 +1,29 @@
+<% if moderator?(@tema) || (current_user and current_user.role == 'admin') %>
+<br><br>
+<div class="profile_content">
+    <p>
+      <strong>Pending moderator requests:</strong>
+      <div id="pending_requests">
+      <% @tema.moderator_requests.sort_by {|request| request.tema_id }.each do |request| %>
+      <div class="request"><%= request.user.name %> <%= render 'reputation', user: request.user %>
+        <%= request_button(request.tema) %> <%= request_cancel_button(request.tema) %>
+      </div>
+      <% end %>
+      </div>
+    </p>
+  </div>
+  <div class="profile_content">
+      <p>
+        <strong>Moderators:</strong>
+        <div id="pending_requests">
+        <% @tema.moderators.sort_by {|request| request.tema_id }.each do |request| %>
+          <% if current_user != request.user %>
+            <div class="request"><%= request.user.name %> <%= render 'reputation', user: request.user %>
+              <%= moderator_cancel_button(request.tema) %>
+            </div>
+          <% end %>
+        <% end %>
+        </div>
+      </p>
+  </div>
+<% end %>
